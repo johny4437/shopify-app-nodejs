@@ -8,7 +8,7 @@ const request = require('request-promise');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = 'read_products';
-const forwardingAddress = "http://111c762e.ngrok.io"; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = "https://cbec12ac.ngrok.io"; // Replace this with your HTTPS Forwarding address
 
 
 module.exports = {
@@ -30,5 +30,46 @@ module.exports = {
          }else{
              return res.status(400).send('Parametro shop perdido. Por favor adicione ?shop=your-development-shop.myshopify.com a sua requisição.');
          }
+    },
+
+    //ROTA DE CALLBACK
+
+    async callbackRouter(req, res){
+        const {shop, hmac, code, state} = req.query;
+        const stateCookie = cookie.parse(req.headers.cookie).state;
+
+        if(state !== stateCookie){
+            return res.status(403).send(" A origem da requisição não pode ser verificada.");
+        }
+        if(shop && hmac && code){
+            const map = Object.assign({}, req. query);
+            delete map ['signature'];
+            delete map['hmac'];
+            
+            const message = querystring.stringify(map);
+            const providedeHmac = Buffer.from(hmac,'utf-8');
+            const generatedHash = Buffer.from(
+                crypto
+                  .createHmac('sha256', apiSecret)
+                  .update(message)
+                  .digest('hex'),
+                  'utf8'
+                );
+
+            let hashEquals = false;
+
+            try {
+                hashEquals = crypto.timingSafeEqual(generatedHash, providedeHmac);
+            } catch (e) {
+                hashEquals = false;
+            };
+
+            if(!hashEquals){
+                return res.status(400).send('HMAC validation failed::');
+            }
+
+        }else{
+            res.status(400).send("Something is wrong.")
+        }
     }
 }
