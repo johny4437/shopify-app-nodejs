@@ -8,7 +8,7 @@ const request = require('request-promise');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = 'read_products';
-const forwardingAddress = "https://cbec12ac.ngrok.io"; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = "https://8614a67b.ngrok.io"; // Replace this with your HTTPS Forwarding address
 
 
 module.exports = {
@@ -67,6 +67,22 @@ module.exports = {
             if(!hashEquals){
                 return res.status(400).send('HMAC validation failed::');
             }
+            const acessTokenRequestURL = 'https://' + shop + '/admin/oauth/access_token';
+            const acessTokenPayload = {
+                client_id: apiKey,
+                client_secret: apiSecret,
+                code
+            };
+
+            request.post(acessTokenRequestURL, {json: acessTokenPayload })
+            .then((acessTokenResponde)=>{
+                const accessToken = acessTokenResponde.access_token;
+
+                res.status(200).send("Got an access token, let's do something with it");
+            })
+            .catch((error) => {
+                res.status(error.statusCode).send(error.error.error_description);
+              });
 
         }else{
             res.status(400).send("Something is wrong.")
