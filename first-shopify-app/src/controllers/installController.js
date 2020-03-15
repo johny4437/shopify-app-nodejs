@@ -8,7 +8,7 @@ const request = require('request-promise');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = 'read_products';
-const forwardingAddress = "https://8614a67b.ngrok.io"; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = "https://327223c7.ngrok.io"; // Replace this with your HTTPS Forwarding address
 
 
 module.exports = {
@@ -77,8 +77,9 @@ module.exports = {
             request.post(acessTokenRequestURL, {json: acessTokenPayload })
             .then((acessTokenResponde)=>{
                 const accessToken = acessTokenResponde.access_token;
+                
+                res.redirect('/shopify/app?shop='+shop);
 
-                res.status(200).send("Got an access token, let's do something with it");
             })
             .catch((error) => {
                 res.status(error.statusCode).send(error.error.error_description);

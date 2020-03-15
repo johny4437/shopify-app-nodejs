@@ -25,9 +25,22 @@ module.exports = {
                 'X-Shopify-Access-Token': process.env.appStoreTokenTest,
                 'content-type': 'application/json'
             },
-            body:new_product;
-        }
+            body: new_product
+        };
 
         request.post(options)
+        .then(function (response) {
+            console.log(response.body);
+            if (response.statusCode == 201) {
+                res.json(true);
+            } else {
+                res.json(false);
+            }
+
+        })
+        .catch(function (err) {
+            console.log(err);
+            res.json(false);
+        });
     }
 }
