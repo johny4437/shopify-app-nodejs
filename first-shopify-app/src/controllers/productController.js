@@ -5,14 +5,14 @@ module.exports = {
     async product(req, res){
         let new_product = {
             product:{
-                title: req.body.title,
-                vendor: req.body.vendor,
-                product_type: req.body.type,
-                tags: req.body.tags
+                title: "DELL NOTEBOOK 2020",
+                vendor:"DELL CORPORATION",
+                product_type:"ELETRONIC",
+                tags: "COMPUTER, PC, NOTEBOOK"
             }
         };
 
-        console.log(req.query.shop);
+        //console.log(req.query.shop);
 
         let url = 'https://' + req.query.shop +'/admin/products.json';
 
@@ -28,7 +28,7 @@ module.exports = {
             body: new_product
         };
 
-        request.post(options)
+        request.post(options, {json:product})
         .then(function (response) {
             console.log(response.body);
             if (response.statusCode == 201) {

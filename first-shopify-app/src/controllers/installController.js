@@ -4,6 +4,7 @@ const cookie = require('cookie');
 const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise');
+const path =  require('path');
 
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
@@ -78,13 +79,12 @@ module.exports = {
             .then((acessTokenResponde)=>{
                 const accessToken = acessTokenResponde.access_token;
                 
-                res.redirect('/shopify/app?shop='+shop);
-
-            })
-            .catch((error) => {
+                res.sendFile(path.join(__dirname , '..','views','index.html'));
+                
+              })
+              .catch((error) => {
                 res.status(error.statusCode).send(error.error.error_description);
               });
-
         }else{
             res.status(400).send("Something is wrong.")
         }
