@@ -1,6 +1,9 @@
-module.exports = (req, res, next)=>{
-    let shop = req.query.shop;
-    res.render('app',{shop:shop});
+const path = require('path');
 
+module.exports = (req, res)=>{
+    let app = req.query.app
+    let shop = req.query.shop
+    const url = 'https://'+ shop +`/admin/apps/${app}`;
+res.sendFile(path.join(__dirname,'..', 'views', 'index.html'));
     return next();
 }

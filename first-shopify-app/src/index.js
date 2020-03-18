@@ -1,23 +1,14 @@
-const dotenv = require('dotenv').config();
-const express = require('express');
-const app = express();
-const crypto = require('crypto');
-const cookie = require('cookie');
+const shopify =  require('shopify-node-api');
 const nonce = require('nonce')();
-const querystring = require('querystring');
-const request = require('request-promise');
 
-const apiKey = process.env.SHOPIFY_API_KEY;
-const apiSecret = process.env.SHOPIFY_API_SECRET;
-const scopes = 'read_products';
-const forwardingAddress = "https://111c762e.ngrok.io"; // Replace this with your HTTPS Forwarding address
-
-app.get('/shopify', (req, res) => {
-
-
-  
+var Shopify = new shopifyAPI({
+  shop: 'burn-johny.myshopify.com', // MYSHOP.myshopify.com
+  shopify_api_key: '65c75c474a3d611d7001639254e81a5d', // Your API key
+  shopify_shared_secret: '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', // Your Shared Secret
+  shopify_scope: 'write_products',
+  redirect_uri: 'https://3e637e85.ngrok.io/finish_auth',
+  nonce: nonce()// you must provide a randomly selected value unique for each authorization request
 });
 
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
-});
+
+var auth_url = Shopify.buildAuthURL();

@@ -7,7 +7,7 @@
    <body>
        <h1>CREATE A PRODUCT</h1>
 
-       <form>
+       <form method="POST" id="form_id" action="/admin/products">
            <label>Nome do Produto</label>
            <input>
            <br>
@@ -17,7 +17,7 @@
            <label>Vendedor</label>
            <input>
            <br>
-           <button>SEND</button>
+           <button type="submit" onclick=send()>SEND</button>
        </form>
    </body>
 </html>
