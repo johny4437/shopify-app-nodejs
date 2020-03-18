@@ -3,10 +3,10 @@ const crypto = require('crypto');
 const cookie = require('cookie');
 const nonce = require('nonce')();
 const querystring = require('querystring');
-const request = require('request-promise');
+const request = require('request-promise-native').defaults({ family: 4 })
 const path =  require('path');
 const url = require('url');
-
+const ShopifyAPI =  require('shopify-node-api');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = 'read_products';
@@ -15,41 +15,35 @@ const forwardingAddress = "https://1e65c356.ngrok.io"; // Replace this with your
 module.exports = {
     async product(req, res){
         
-        const code = req.query;
-        const acessTokenRequestURL = 'https://' + req.query.shop + '/admin/oauth/access_token';
-        const acessTokenPayload = {
-            client_id: apiKey,
-            client_secret: apiSecret,
-            code
-        };
-
-        request.post(acessTokenRequestURL, {json: acessTokenPayload })
-        .then((acessTokenResponde)=>{
-            const accessToken = acessTokenResponde.access_token;
-            
 
               let new_product = {
-                product: {
-                    title: req.body.title,
-                    body_html: req.body.body_html,
-                    vendor: req.body.vendor,
-                    product_type: req.body.product_type,
-                    tags: req.body.tags
-                }
+               
             };
             console.log(req.query.shop);
-            let url = 'https://' + req.query.shop + '/admin/products.json';
-        
-            let options = {
+            
+            let URL = 'https://burn-johny.myshopify.com/admin/api/2020-01/products.json';
+            let accessToken = " 7107724b30124422b9e1dcbf36a13d21";
+            var options = {
                 method: 'POST',
-                uri: url,
-                json: true,
-                resolveWithFullResponse: true,//added this to view status code
+                uri: URL,
+                body: {
+                    "product": {
+                        "title": "Burton Custom Freestyle 151",
+                        "body_html": "<strong>Good snowboard!</strong>",
+                        "vendor": "Burton",
+                        "product_type": "Snowboard",
+                        "tags": [
+                          "Barnes & Noble",
+                          "John's Fav",
+                          
+                        ]
+                      }
+                },
+                json: true ,
                 headers: {
                     'X-Shopify-Access-Token': accessToken,
                     'content-type': 'application/json'
                 },
-                body: new_product//pass new product object - NEW - request-promise problably updated
             };
         
             request.post(options)
@@ -69,13 +63,8 @@ module.exports = {
         
 
 
-             })
              
-             
-          
-          .catch((error) => {
-            res.status(error.statusCode).send(error.error.error_description);
-          });
+        
 
     }
 }
