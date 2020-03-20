@@ -5,43 +5,39 @@ function productForm() {
   return (
     <form>
     <div className="input-block">
-      <label htmlFor="github_username">Usuário do Github</label>
+      <label htmlFor="product_title">Titulo</label>
       <input 
-        name="github_username" 
-        id="github_username" 
+        name="product_title" 
+        id="product_title" 
         required
         
       />
     </div>
 
     <div className="input-block">
-      <label htmlFor="techs">Tecnologias</label>
+      <label htmlFor="vendor">Vendedor</label>
       <input
-        name="techs"
-        id="techs"
+        name="vendor"
+        id="vendor"
+        required
+      />
+    </div>
+    <div className="input-block">
+      <label htmlFor="product_type">Tipo do Produto</label>
+      <input
+        name="product_type"
+        id="product_type"
         required
       />
     </div>
 
-    <div className="input-group">
-      <div className="input-block">
-        <label htmlFor="latitude">Latitude</label>
-        <input 
-          type="number" 
-          name="latitude" 
-          id="latitude" 
-        />
-      </div>
-
-      <div className="input-block">
-        <label htmlFor="longitude">Longitude</label>
-        <input
-          type="number"
-          name="longitude"
-          id="longitude"
-          required
-        />
-      </div>
+    <div className="input-block">
+      <label htmlFor="tags">Tags</label>
+      <input
+        name="tags"
+        id="tags"
+        required
+      />
     </div>
 
     <button type="submit">Salvar</button>

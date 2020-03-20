@@ -6,7 +6,7 @@ function App() {
   return (
 
     <div id="App">
-      <h1>Hello</h1>
+      <h1>ADICIONAR NOVOS PRODUTOS</h1>
       <ProductForm/>
     </div>
    
