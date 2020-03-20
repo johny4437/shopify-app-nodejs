@@ -1,6 +1,4 @@
-const dotenv = require('dotenv').config();
-const crypto = require('crypto');
-const cookie = require('cookie');
+
 const nonce = require('nonce')();
 const querystring = require('querystring');
 const request = require('request-promise-native').defaults({ family: 4 })
@@ -14,14 +12,16 @@ const forwardingAddress = "https://1e65c356.ngrok.io"; // Replace this with your
 
 module.exports = {
     async product(req, res){
+
+        let {shop} =  req.query;
         
 
               let new_product = {
                
             };
-            console.log(req.query.shop);
+            console.log(shop);
             
-            let URL = 'https://burn-johny.myshopify.com/admin/api/2020-01/products.json';
+            let URL = 'https://'+ shop +'/admin/api/2020-01/products.json';
             let accessToken = " 7107724b30124422b9e1dcbf36a13d21";
             var options = {
                 method: 'POST',

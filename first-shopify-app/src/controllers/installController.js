@@ -10,7 +10,7 @@ const shopify = require('shopify-node-api');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
 const scopes = 'read_products, write_products';
-const forwardingAddress = "https://ab623f7b.ngrok.io"; // Replace this with your HTTPS Forwarding address
+const forwardingAddress = "https://1f2e53ff.ngrok.io"; // Replace this with your HTTPS Forwarding address
 
 
 module.exports = {
