@@ -8,8 +8,8 @@ const request = require('request-promise');
 const url = require('url');
 const apiKey = process.env.SHOPIFY_API_KEY;
 const apiSecret = process.env.SHOPIFY_API_SECRET;
-const scopes = 'read_products';
-const forwardingAddress = "https://ab623f7b.ngrok.io"; // Replace this with your HTTPS Forwarding address
+
+; // Replace this with your HTTPS Forwarding address
 
 module.exports = {
     async auth(req, res, next){

@@ -11,7 +11,7 @@ router.get('/shopify', installController.installRoute);
 router.get('/shopify/auth', authController.auth);
 router.get('/shopify/app', function (req, res, next) {
     let shop = req.query.shop;
-    res.render('index', { shop: shop });
+    res.send({ shop: shop });
 });
 router.post('/app/create-a-product',productController.product)
 

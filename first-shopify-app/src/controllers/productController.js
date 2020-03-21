@@ -1,14 +1,8 @@
 
 const nonce = require('nonce')();
-const querystring = require('querystring');
 const request = require('request-promise-native').defaults({ family: 4 })
-const path =  require('path');
-const url = require('url');
-const ShopifyAPI =  require('shopify-node-api');
-const apiKey = process.env.SHOPIFY_API_KEY;
-const apiSecret = process.env.SHOPIFY_API_SECRET;
-const scopes = 'read_products';
-const forwardingAddress = "https://1e65c356.ngrok.io"; // Replace this with your HTTPS Forwarding address
+
+
 
 module.exports = {
     async product(req, res){
@@ -16,27 +10,20 @@ module.exports = {
         let {shop} =  req.query;
         
 
-              let new_product = {
-               
-            };
             console.log(shop);
             
-            let URL = 'https://'+ shop +'/admin/api/2020-01/products.json';
+            let URL = 'https://burn-johny.myshopify.com/admin/api/2020-01/products.json';
             let accessToken = " 7107724b30124422b9e1dcbf36a13d21";
             var options = {
                 method: 'POST',
                 uri: URL,
                 body: {
                     "product": {
-                        "title": "Burton Custom Freestyle 151",
+                        "title": req.body.title,
                         "body_html": "<strong>Good snowboard!</strong>",
-                        "vendor": "Burton",
-                        "product_type": "Snowboard",
-                        "tags": [
-                          "Barnes & Noble",
-                          "John's Fav",
-                          
-                        ]
+                        "vendor": req.body.vendor,
+                        "product_type": req.body.product_type,
+                        "tags": [req.body.tags ]
                       }
                 },
                 json: true ,
@@ -56,8 +43,8 @@ module.exports = {
                     }
         
                 })
-                .catch(function (err) {
-                    console.log(err);
+                .catch(function (error) {
+                    console.log("error to insert product");
                     res.json(false);
                 });
         
